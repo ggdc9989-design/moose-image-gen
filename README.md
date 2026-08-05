@@ -1,5 +1,5 @@
 # moosecloud.cc
-
+AAAA
 > 来源于 [moosecloud.cc Token 聚合站](https://moosecloud.cc/) 的 Codex 专用生图插件。
 
 `moosecloud-image-gen v0.4.0` 基于 `gpt-image-2`，由 Codex 当前会话模型理解需求并整理提示词，提供文生图、图生图、多参考图、流式预览、批量任务及最多 10 个 worker 的调度能力。
