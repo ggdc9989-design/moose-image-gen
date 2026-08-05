@@ -16,9 +16,9 @@
     "category": "Productivity",
     "capabilities": ["Write"],
     "brandColor": "#0F766E",
-    "composerIcon": "./assets/composer-icon.svg",
-    "logo": "./assets/plugin-logo.svg",
-    "logoDark": "./assets/plugin-logo-dark.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo.png",
     "websiteURL": "https://moosecloud.cc/",
     "defaultPrompt": "使用麋鹿云生成一张图片。"
   }
