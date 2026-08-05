@@ -1,11 +1,11 @@
-# 88API-image-gen
+# moosecloud.cc
 
-> 来源于 [88api.ai Token 聚合站](https://88api.ai/) 的 Codex 专用生图插件。
+> 来源于 [moosecloud.cc Token 聚合站](https://moosecloud.cc/) 的 Codex 专用生图插件。
 
-`88API-image-gen v0.4.0` 基于 `gpt-image-2`，由 Codex 当前会话模型理解需求并整理提示词，提供文生图、图生图、多参考图、流式预览、批量任务及最多 10 个 worker 的调度能力。
+`moosecloud-image-gen v0.4.0` 基于 `gpt-image-2`，由 Codex 当前会话模型理解需求并整理提示词，提供文生图、图生图、多参考图、流式预览、批量任务及最多 10 个 worker 的调度能力。
 
 > [!CAUTION]
-> **低配置电脑切勿批量生图或启用多个 worker。** 本地卡死、断网、Codex 崩溃或图片保存失败，不会撤销已经提交到 88API 云端的请求；云端已受理或完成的任务仍可能计费。首次使用请保持单 Key、单 worker、`--concurrency 1`。
+> **低配置电脑切勿批量生图或启用多个 worker。** 本地卡死、断网、Codex 崩溃或图片保存失败，不会撤销已经提交到 麋鹿云 云端的请求；云端已受理或完成的任务仍可能计费。首次使用请保持单 Key、单 worker、`--concurrency 1`。
 
 ## v0.4.0 核心能力
 
@@ -24,8 +24,8 @@
 
 - Codex
 - Node.js 18 或更高版本，推荐 Node.js 20+
-- 可以访问 GitHub 和 88API
-- 至少一个 88API“生图分组 Key”
+- 可以访问 GitHub 和 麋鹿云
+- 至少一个 麋鹿云“生图分组 Key”
 
 插件运行不需要 Python、pip、虚拟环境或额外 npm 包。
 
@@ -41,9 +41,9 @@ node --version
 
 ### 让 Codex 安装
 
-把仓库地址 [blackdm666/88API-image-gen](https://github.com/blackdm666/88API-image-gen) 交给 Codex，并告诉它：
+把仓库地址 [moosecloud-image-gen](https://github.com/ZDC494225094/moose-image-gen.git) 交给 Codex，并告诉它：
 
-> 安装仓库中的 `88api-image-gen` 插件，检查 Node.js 和本地图片处理环境；如果没有配置 Key，提醒我先去 88api.ai 创建生图分组 Key。
+> 安装仓库中的 `moosecloud-image-gen` 插件，检查 Node.js 和本地图片处理环境；如果没有配置 Key，提醒我先去 moosecloud.cc 创建生图分组 Key。
 
 也可以手动安装：
 
