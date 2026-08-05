@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Moose Cloud</title>
+  <desc id="desc">A teal and amber antler mark for Moose Cloud image generation.</desc>
+  <rect width="1024" height="1024" rx="192" fill="#F4F8F5"/>
+  <circle cx="512" cy="470" r="322" fill="#0F766E"/>
+  <path d="M512 255v365M512 316c-47-73-108-104-164-111M512 365c-38-47-78-66-121-72M512 316c47-73 108-104 164-111M512 365c38-47 78-66 121-72" fill="none" stroke="#F7C66A" stroke-linecap="round" stroke-width="26"/>
+  <path d="M391 438c-29 0-53 24-53 53 0 10 3 20 8 28-28 5-49 30-49 60 0 34 27 61 61 61h308c34 0 61-27 61-61 0-30-21-55-49-60 5-8 8-18 8-28 0-29-24-53-53-53-15 0-29 6-39 17-20-25-50-41-82-41s-62 16-82 41c-10-11-24-17-39-17z" fill="#FFFFFF"/>
+  <text x="512" y="755" fill="#12302F" font-family="Arial, sans-serif" font-size="72" font-weight="700" letter-spacing="8" text-anchor="middle">MOOSE</text>
+  <text x="512" y="815" fill="#0F766E" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="10" text-anchor="middle">CLOUD</text>
+</svg>

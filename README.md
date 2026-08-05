@@ -1,8 +1,9 @@
-# moosecloud.cc
-AAAA
+# 麋鹿云生图插件
 > 来源于 [moosecloud.cc Token 聚合站](https://moosecloud.cc/) 的 Codex 专用生图插件。
 
-`moosecloud-image-gen v0.4.0` 基于 `gpt-image-2`，由 Codex 当前会话模型理解需求并整理提示词，提供文生图、图生图、多参考图、流式预览、批量任务及最多 10 个 worker 的调度能力。
+`moose-image-gen v0.4.0` 基于 `gpt-image-2`，由 Codex 当前会话模型理解需求并整理提示词，提供文生图、图生图、多参考图、流式预览、批量任务及最多 10 个 worker 的调度能力。
+
+生图 API Base URL：`https://moose.devdeg.com/v1`
 
 > [!CAUTION]
 > **低配置电脑切勿批量生图或启用多个 worker。** 本地卡死、断网、Codex 崩溃或图片保存失败，不会撤销已经提交到 麋鹿云 云端的请求；云端已受理或完成的任务仍可能计费。首次使用请保持单 Key、单 worker、`--concurrency 1`。
@@ -58,20 +59,18 @@ node --version
 3. 第一次使用将数量设为 `1`；只有确实需要并行生成多张独立图片时才增加。
 4. 按需设置额度和过期时间并保存。
 
-在 麋鹿云 控制台创建生图分组 Key：https://moosecloud.cc/keys
+在麋鹿云控制台创建生图分组 Key：<https://moosecloud.cc/keys>
 
 创建完成后确认 Key 为“已启用”、分组为“Gpt-Image2-生图分组”，再复制 Key。
 
-在 麋鹿云 控制台复制生图分组 Key
-
-截图中的 Key 已脱敏。不要把真实 Key 写入 README、Git 提交、日志或聊天回复。
+复制 Key 后不要把真实 Key 写入 README、Git 提交、日志或聊天回复。
 
 ### 2. 保存第一个 Key
 
 将占位符替换为真实 Key：
 
 ```powershell
-node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --set-key "<YOUR_MooseCloudAPI_IMAGE_GROUP_KEY>"
+node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --set-key "<YOUR_MOOSE_CLOUD_IMAGE_GROUP_KEY>"
 node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --get-config
 ```
 
@@ -91,7 +90,7 @@ node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --get-config
 一个 Key 就能正常使用。多个 Key 只会并行处理多张独立图片，不会加速单张图片。
 
 ```powershell
-node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --add-worker-key "<ANOTHER_IMAGE_GROUP_KEY>" --worker-name worker-2
+node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --add-worker-key "<ANOTHER_MOOSE_CLOUD_IMAGE_GROUP_KEY>" --worker-name worker-2
 node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --list-workers
 ```
 
@@ -193,7 +192,7 @@ node "$HOME/plugins/moose-image-gen/scripts/generate.mjs" --workflow-batch-edit 
 
 ## 排错
 
-- **没有 Key：**访问 麋鹿云.ai 创建生图分组 Key，再运行 `--set-key` 和 `--get-config`。
+- **没有 Key：**访问 麋鹿云 创建生图分组 Key，再运行 `--set-key` 和 `--get-config`。
 - **模型权限错误：**确认使用的是 麋鹿云“生图分组 Key”，并且可以访问 `gpt-image-2` Images API。
 - **图片编辑失败：**确认路径存在、格式为 PNG/JPG/JPEG/WebP，并使用 `--edit --image`。
 - **比例报错：**只使用上表支持的比例，不要传入 `--size`。

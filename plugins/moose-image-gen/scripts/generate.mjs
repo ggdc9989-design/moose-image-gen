@@ -5,14 +5,13 @@ import { basename, dirname, join } from "node:path";
 import { homedir, tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
-const API_ROOT = "https://88api.ai";
-const IMAGES_GENERATIONS_URL = `${API_ROOT}/v1/images/generations`;
-const IMAGES_EDITS_URL = `${API_ROOT}/v1/images/edits`;
+const API_BASE_URL = "https://moose.devdeg.com/v1";
+const IMAGES_GENERATIONS_URL = `${API_BASE_URL}/images/generations`;
+const IMAGES_EDITS_URL = `${API_BASE_URL}/images/edits`;
 const IMAGE_MODEL = "gpt-image-2";
 const DEFAULT_TRANSPORT = "images";
 const TRANSPORTS = new Set(["auto", "images"]);
-const CONFIG_PATH = join(homedir(), ".codex", "88api-image-gen-config.json");
-const LEGACY_CONFIG_PATH = join(homedir(), ".codex", "fhl-image-gen-config.json");
+const CONFIG_PATH = join(homedir(), ".codex", "moose-image-gen-config.json");
 
 const MAX_GENERATION_COUNT = 9;
 const MAX_REPEAT = 50;
@@ -100,7 +99,7 @@ const DEFAULTS = {
   concurrency: 3,
 };
 const FIXED_REQUEST_QUALITY = "2K";
-const API_SIZE_LIMIT_NOTICE = "图像请求规格与实际计费以 88api.ai 控制台为准。";
+const API_SIZE_LIMIT_NOTICE = "图像请求规格与实际计费以麋鹿云控制台为准。";
 const WORKER_ID_PREFIX = "worker-";
 const DEFAULT_WORKER_NAME = "default";
 const DEFAULT_WORKER_COOLDOWN_MS = 60_000;
@@ -256,17 +255,14 @@ function saveConfig(config) {
 }
 
 function loadConfig() {
-  const sourcePath = existsSync(CONFIG_PATH)
-    ? CONFIG_PATH
-    : (existsSync(LEGACY_CONFIG_PATH) ? LEGACY_CONFIG_PATH : null);
-  if (!sourcePath) return normalizeConfigShape({}).config;
+  if (!existsSync(CONFIG_PATH)) return normalizeConfigShape({}).config;
   try {
-    const parsed = JSON.parse(readFileSync(sourcePath, "utf8"));
+    const parsed = JSON.parse(readFileSync(CONFIG_PATH, "utf8"));
     const normalized = normalizeConfigShape(parsed);
-    if (normalized.changed || sourcePath === LEGACY_CONFIG_PATH) saveConfig(normalized.config);
+    if (normalized.changed) saveConfig(normalized.config);
     return normalized.config;
   } catch (error) {
-    console.warn(`WARNING: Unable to read 88API configuration at ${sourcePath}: ${error?.message || String(error)}`);
+    console.warn(`WARNING: Unable to read 麋鹿云 configuration at ${CONFIG_PATH}: ${error?.message || String(error)}`);
     return normalizeConfigShape({}).config;
   }
 }
@@ -280,7 +276,7 @@ function getConfiguredWorkers(config, options = {}) {
 function getEnabledWorkersOrExit(config) {
   const workers = getConfiguredWorkers(config, { requireEnabled: true });
   if (workers.length === 0) {
-    console.error("ERROR: No enabled 88API worker is configured. Create an image-generation group key at https://88api.ai/ and run --set-key <YOUR_88API_IMAGE_GROUP_KEY>. Start with one worker; multiple workers use more memory.");
+    console.error("ERROR: No enabled 麋鹿云 worker is configured. Create an image-generation group key at https://moosecloud.cc/ and run --set-key <YOUR_MOOSE_CLOUD_IMAGE_GROUP_KEY>. Start with one worker; multiple workers use more memory.");
     process.exit(1);
   }
   return workers;
@@ -454,7 +450,7 @@ function timestamp() {
 }
 
 function resolveOutputDir(userDir) {
-  const dir = userDir || join(homedir(), "Pictures", "88api-image-gen");
+  const dir = userDir || join(homedir(), "Pictures", "moose-image-gen");
   mkdirSync(dir, { recursive: true });
   return dir;
 }
@@ -538,11 +534,11 @@ function writeCsvFile(path, rows) {
 }
 
 function buildNailStressOutputRoot(userDir) {
-  return resolveOutputDir(userDir || join(homedir(), "Pictures", "88api-image-gen", `nail-stress-test_${timestamp()}`));
+  return resolveOutputDir(userDir || join(homedir(), "Pictures", "moose-image-gen", `nail-stress-test_${timestamp()}`));
 }
 
 function buildWorkflowOutputRoot(userDir) {
-  return resolveOutputDir(userDir || join(homedir(), "Pictures", "88api-image-gen", `workflow_${timestamp()}`));
+  return resolveOutputDir(userDir || join(homedir(), "Pictures", "moose-image-gen", `workflow_${timestamp()}`));
 }
 
 function imageMimeTypeFromPath(path) {
@@ -1011,7 +1007,7 @@ async function imageApiResultBase64(data) {
   if (base64) return base64;
   const item = Array.isArray(data?.data) ? data.data.find((entry) => typeof entry?.url === "string" && entry.url) : null;
   if (!item?.url) return "";
-  const res = await requestWithTimeout(item.url, { headers: { "User-Agent": "88api-image-gen/0.4" } }, REQUEST_TIMEOUT_MS);
+  const res = await requestWithTimeout(item.url, { headers: { "User-Agent": "moose-image-gen/0.4" } }, REQUEST_TIMEOUT_MS);
   if (!res.ok) throw new Error(`Image download failed: HTTP ${res.status}`);
   return Buffer.from(await res.arrayBuffer()).toString("base64");
 }
@@ -1054,7 +1050,7 @@ function walkForImageApiBase64(value) {
 }
 
 function createPreviewPath() {
-  const previewDir = resolveOutputDir(join(tmpdir(), "88api-image-gen-previews"));
+  const previewDir = resolveOutputDir(join(tmpdir(), "moose-image-gen-previews"));
   return join(previewDir, `preview_${timestamp()}_${Math.random().toString(36).slice(2, 6)}.png`);
 }
 
@@ -2600,7 +2596,7 @@ async function runWorkflowBatchEdit(workers, options) {
 
 async function runWorkflowSelfTest() {
   const onePixelPng = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=", "base64");
-  const outputRoot = join(tmpdir(), `88api-workflow-self-test_${timestamp()}`);
+  const outputRoot = join(tmpdir(), `moose-image-gen-workflow-self-test_${timestamp()}`);
   const item = {
     itemIndex: 1,
     name: "item.png",
@@ -2961,7 +2957,7 @@ async function runImagesApiSelfTest() {
   const [base64] = extractImagesFromImageApi({ data: [{ b64_json: pngB64 }] });
   const logSummary = imageApiLogSummary({ data: [{ b64_json: pngB64, url: "https://signed.example/image.png" }] });
   const logText = JSON.stringify(logSummary);
-  const outputDir = resolveOutputDir(join(tmpdir(), "88api-image-gen-self-test"));
+  const outputDir = resolveOutputDir(join(tmpdir(), "moose-image-gen-self-test"));
   const saved = saveBase64Image(base64, outputDir, "self_test_edit");
   const savedOk = !!saved?.path && existsSync(saved.path) && saved.width === 1 && saved.height === 1;
   const logOk = logSummary.images?.[0]?.base64_characters === pngB64.length
@@ -3114,13 +3110,13 @@ function parseArgs(argv) {
 }
 
 function printUsage() {
-  console.log(`88API-image-gen
+  console.log(`moose-image-gen
 
 CONFIG
   --get-config
   --list-workers
-  --set-key <YOUR_88API_IMAGE_GROUP_KEY>
-  --add-worker-key <ANOTHER_88API_IMAGE_GROUP_KEY> [--worker-name <name>]
+  --set-key <YOUR_MOOSE_CLOUD_IMAGE_GROUP_KEY>
+  --add-worker-key <ANOTHER_MOOSE_CLOUD_IMAGE_GROUP_KEY> [--worker-name <name>]
   --set-worker-key <worker> <key>
   --remove-worker <worker>
   --enable-worker <worker>
@@ -3130,7 +3126,7 @@ CONFIG
 
 FIRST USE
   runtime: Node.js 18+ (Python is not required)
-  create one or more image-generation group keys at https://88api.ai/
+  create one or more image-generation group keys at https://moosecloud.cc/
   recommended: one key/worker; add distinct keys only for concurrent independent images
   maximum: ${MAX_WORKERS} workers; multiple workers can use substantial memory and are not recommended on low-spec computers
 
@@ -3170,13 +3166,13 @@ TOOLS
   --self-test-workflow
 
 DEFAULTS
-  API root: ${API_ROOT}
+  API base URL: ${API_BASE_URL}
   generation endpoint: ${IMAGES_GENERATIONS_URL}
   edit endpoint: ${IMAGES_EDITS_URL}
   image model: ${IMAGE_MODEL}
   API mode: gpt-image-2 Images API only; no GPT text model required
   request quality: fixed ${FIXED_REQUEST_QUALITY}
-  output: ~/Pictures/88api-image-gen
+  output: ~/Pictures/moose-image-gen
   worker pool: enabled, one worker per task, auto parallel for independent tasks, max workers ${MAX_WORKERS}
   adaptive: on, concurrency ${DEFAULTS.concurrency}, retries ${MAX_RETRIES}, worker cooldown ${DEFAULT_WORKER_COOLDOWN_MS / 1000}s
   notice: ${API_SIZE_LIMIT_NOTICE}
@@ -3197,7 +3193,7 @@ function resolveGenerationParams(flags, modeConfig) {
   const requestedQuality = flags.quality || modeConfig?.quality || DEFAULTS.quality;
   const quality = normalizeQuality(requestedQuality);
   if (shouldWarnFixedQuality(requestedQuality)) {
-    console.warn(`NOTICE: 88API image generation is fixed to ${FIXED_REQUEST_QUALITY}; ignoring requested quality="${requestedQuality}". ${API_SIZE_LIMIT_NOTICE}`);
+    console.warn(`NOTICE: 麋鹿云 image generation is fixed to ${FIXED_REQUEST_QUALITY}; ignoring requested quality="${requestedQuality}". ${API_SIZE_LIMIT_NOTICE}`);
   }
 
   if (flags.size) {
@@ -3255,7 +3251,7 @@ async function main() {
         : worker));
     }
     saveConfig(config);
-    console.log(`88API worker saved: ${previewKey(flags.setKey)} (${config.workers[0].name})`);
+    console.log(`麋鹿云 worker saved: ${previewKey(flags.setKey)} (${config.workers[0].name})`);
     return;
   }
 
@@ -3412,7 +3408,7 @@ async function main() {
 
   const configuredWorkers = getConfiguredWorkers(config);
   if (configuredWorkers.filter((worker) => worker.enabled !== false).length === 0) {
-    console.error("ERROR: No enabled 88API worker is configured. Create an image-generation group key at https://88api.ai/ and run --set-key <YOUR_88API_IMAGE_GROUP_KEY>. Start with one worker; multiple workers use more memory.");
+    console.error("ERROR: No enabled 麋鹿云 worker is configured. Create an image-generation group key at https://moosecloud.cc/ and run --set-key <YOUR_MOOSE_CLOUD_IMAGE_GROUP_KEY>. Start with one worker; multiple workers use more memory.");
     process.exit(1);
   }
 

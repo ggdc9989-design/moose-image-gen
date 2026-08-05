@@ -16,11 +16,11 @@ temp/
 *.orig
 
 # Plugin local artifacts
-plugins/fhl-image-gen/output/
-plugins/fhl-image-gen/logs/
-plugins/fhl-image-gen/tmp/
-plugins/fhl-image-gen/temp/
-plugins/fhl-image-gen/*.log
+plugins/moose-image-gen/output/
+plugins/moose-image-gen/logs/
+plugins/moose-image-gen/tmp/
+plugins/moose-image-gen/temp/
+plugins/moose-image-gen/*.log
 
 # OS/editor noise
 .DS_Store

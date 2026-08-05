@@ -1,0 +1,25 @@
+{
+  "name": "moose-image-gen",
+  "version": "0.4.0",
+  "description": "麋鹿云 Codex 专用生图插件，使用 gpt-image-2 Images API、真实流式预览与智能提示词编排。",
+  "author": {
+    "name": "麋鹿云"
+  },
+  "homepage": "https://moosecloud.cc/",
+  "repository": "https://github.com/ggdc9989-design/moose-image-gen",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "麋鹿云生图",
+    "shortDescription": "麋鹿云 Images API、真实流式预览、智能提示词与批量工作流。",
+    "longDescription": "麋鹿云 Codex 专用生图插件，只调用 gpt-image-2 Images API，无需 GPT 文本模型权限；文生图支持原生 SSE 实时预览，并支持智能提示词、多参考图、最多 10 个 worker、批量工作流和自动补洞。",
+    "developerName": "麋鹿云",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/composer-icon.svg",
+    "logo": "./assets/plugin-logo.svg",
+    "logoDark": "./assets/plugin-logo-dark.svg",
+    "websiteURL": "https://moosecloud.cc/",
+    "defaultPrompt": "使用麋鹿云生成一张图片。"
+  }
+}
