@@ -5,7 +5,7 @@ description: "Generate or edit images with the moosecloud.cc Token aggregation s
 
 # moose-image-gen
 
-This is the Codex-native image generation plugin for 麋鹿云. It calls `gpt-image-2` through `https://moose.devdeg.com/v1`; no GPT text model permission is required. A single text-to-image task can opt into native Images API partial-image SSE previews.
+This is the Codex-native image generation plugin for 麋鹿云. Its API base URL is `https://moosecloud.cc`, with image requests sent to `/v1/images/generations` and `/v1/images/edits`; no GPT text model permission is required. A single text-to-image task can opt into native Images API partial-image SSE previews.
 
 ## Script
 
@@ -233,7 +233,7 @@ node "$HOME\plugins\moose-image-gen\scripts\generate.mjs" --workflow-batch-edit 
 
 The image-to-image chain always uses `gpt-image-2` Images API:
 
-- Endpoint: `POST https://moose.devdeg.com/v1/images/edits`
+- Endpoint: `POST https://moosecloud.cc/v1/images/edits`
 - Input method: multipart form data with ordered `image[]` files
 - Prompt planning remains in the current Codex conversation
 - This is not a collage step; reference roles follow the original CLI argument order
@@ -313,8 +313,8 @@ node "$HOME\plugins\moose-image-gen\scripts\generate.mjs" --nail-stress-test --p
 
 ## API Contract
 
-- Text-to-image: `POST https://moose.devdeg.com/v1/images/generations`
-- Image edit: `POST https://moose.devdeg.com/v1/images/edits`
+- Text-to-image: `POST https://moosecloud.cc/v1/images/generations`
+- Image edit: `POST https://moosecloud.cc/v1/images/edits`
 - Model: always `gpt-image-2`; GPT text-model permission is not required
 - Request size policy: always use the fixed 2K preset matrix and the supported aspect list above; do not request 1K, 4K, disabled ratios, or arbitrary `--size`
 - Auth: `Authorization: Bearer <麋鹿云 Key>`

@@ -1,25 +1,27 @@
 {
   "name": "moose-image-gen",
-  "version": "0.4.0",
-  "description": "麋鹿云 Codex 专用生图插件，使用 gpt-image-2 Images API、真实流式预览与智能提示词编排。",
+  "version": "0.4.0+codex.20260824095911",
+  "description": "\u9e8b\u9e7f\u4e91 Codex \u4e13\u7528\u751f\u56fe\u63d2\u4ef6\uff0c\u4f7f\u7528 gpt-image-2 Images API\u3001\u771f\u5b9e\u6d41\u5f0f\u9884\u89c8\u4e0e\u667a\u80fd\u63d0\u793a\u8bcd\u7f16\u6392\u3002",
   "author": {
-    "name": "麋鹿云"
+    "name": "\u9e8b\u9e7f\u4e91"
   },
   "homepage": "https://moosecloud.cc/",
   "repository": "https://github.com/ggdc9989-design/moose-image-gen",
   "skills": "./skills/",
   "interface": {
-    "displayName": "麋鹿云生图",
-    "shortDescription": "麋鹿云 Images API、真实流式预览、智能提示词与批量工作流。",
-    "longDescription": "麋鹿云 Codex 专用生图插件，只调用 gpt-image-2 Images API，无需 GPT 文本模型权限；文生图支持原生 SSE 实时预览，并支持智能提示词、多参考图、最多 10 个 worker、批量工作流和自动补洞。",
-    "developerName": "麋鹿云",
+    "displayName": "\u9e8b\u9e7f\u4e91\u751f\u56fe",
+    "shortDescription": "\u9e8b\u9e7f\u4e91 Images API\u3001\u771f\u5b9e\u6d41\u5f0f\u9884\u89c8\u3001\u667a\u80fd\u63d0\u793a\u8bcd\u4e0e\u6279\u91cf\u5de5\u4f5c\u6d41\u3002",
+    "longDescription": "\u9e8b\u9e7f\u4e91 Codex \u4e13\u7528\u751f\u56fe\u63d2\u4ef6\uff0c\u53ea\u8c03\u7528 gpt-image-2 Images API\uff0c\u65e0\u9700 GPT \u6587\u672c\u6a21\u578b\u6743\u9650\uff1b\u6587\u751f\u56fe\u652f\u6301\u539f\u751f SSE \u5b9e\u65f6\u9884\u89c8\uff0c\u5e76\u652f\u6301\u667a\u80fd\u63d0\u793a\u8bcd\u3001\u591a\u53c2\u8003\u56fe\u3001\u6700\u591a 10 \u4e2a worker\u3001\u6279\u91cf\u5de5\u4f5c\u6d41\u548c\u81ea\u52a8\u8865\u6d1e\u3002",
+    "developerName": "\u9e8b\u9e7f\u4e91",
     "category": "Productivity",
-    "capabilities": ["Write"],
+    "capabilities": [
+      "Write"
+    ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo.png",
     "websiteURL": "https://moosecloud.cc/",
-    "defaultPrompt": "使用麋鹿云生成一张图片。"
+    "defaultPrompt": "\u4f7f\u7528\u9e8b\u9e7f\u4e91\u751f\u6210\u4e00\u5f20\u56fe\u7247\u3002"
   }
 }

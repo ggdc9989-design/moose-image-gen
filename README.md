@@ -3,7 +3,7 @@
 
 `moose-image-gen v0.4.0` 基于 `gpt-image-2`，由 Codex 当前会话模型理解需求并整理提示词，提供文生图、图生图、多参考图、流式预览、批量任务及最多 10 个 worker 的调度能力。
 
-生图 API Base URL：`https://moose.devdeg.com/v1`
+生图 API Base URL：`https://moosecloud.cc`
 
 > [!CAUTION]
 > **低配置电脑切勿批量生图或启用多个 worker。** 本地卡死、断网、Codex 崩溃或图片保存失败，不会撤销已经提交到 麋鹿云 云端的请求；云端已受理或完成的任务仍可能计费。首次使用请保持单 Key、单 worker、`--concurrency 1`。

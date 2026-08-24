@@ -5,9 +5,9 @@ import { basename, dirname, join } from "node:path";
 import { homedir, tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
-const API_BASE_URL = "https://moose.devdeg.com/v1";
-const IMAGES_GENERATIONS_URL = `${API_BASE_URL}/images/generations`;
-const IMAGES_EDITS_URL = `${API_BASE_URL}/images/edits`;
+const API_BASE_URL = "https://moosecloud.cc";
+const IMAGES_GENERATIONS_URL = `${API_BASE_URL}/v1/images/generations`;
+const IMAGES_EDITS_URL = `${API_BASE_URL}/v1/images/edits`;
 const IMAGE_MODEL = "gpt-image-2";
 const DEFAULT_TRANSPORT = "images";
 const TRANSPORTS = new Set(["auto", "images"]);
